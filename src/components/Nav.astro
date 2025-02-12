@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets'
+//import SearchBox from "./SearchBox";
+---
+
+<nav class="relative mx-auto p-6 lg:container">
+	<!-- Flex container -->
+	<div class="flex items-center justify-between">
+		<!-- Logo -->
+		<a href="/" class="flex justify-center" aria-label="Go to main page">
+			<Image src="/logo2.svg" alt="Logo" width={180} height={50} />
+		</a>
+		<!-- Menu Items -->
+		<ul class="hidden space-x-3 pl-2 font-medium md:flex lg:space-x-10">
+			<li>
+				<a
+					href="/#home"
+					aria-label="Go to main page"
+					class="relative pb-2 after:absolute after:bottom-0 after:left-1/2 after:block after:h-[2px] after:w-0 after:bg-rose-700 after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
+					>Home</a
+				>
+			</li>
+			<li>
+				<a
+					href="/#catalog"
+					aria-label="Watch all sweet products in Catalog"
+					class="relative pb-2 after:absolute after:bottom-0 after:left-1/2 after:block after:h-[2px] after:w-0 after:bg-rose-700 after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
+					>Catalog</a
+				>
+			</li>
+			<li>
+				<a
+					href="/#reviews"
+					aria-label="Read reviews from clients"
+					class="relative pb-2 after:absolute after:bottom-0 after:left-1/2 after:block after:h-[2px] after:w-0 after:bg-rose-700 after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
+					>Reviews</a
+				>
+			</li>
+			<li>
+				<a
+					href="/#how-to-order"
+					aria-label="How to order form"
+					class="relative pb-2 after:absolute after:bottom-0 after:left-1/2 after:block after:h-[2px] after:w-0 after:bg-rose-700 after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
+					>How to order</a
+				>
+			</li>
+			<li>
+				<a
+					href="/#contacts"
+					aria-label="Contact information"
+					class="relative pb-2 after:absolute after:bottom-0 after:left-1/2 after:block after:h-[2px] after:w-0 after:bg-rose-700 after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
+					>Contacts</a
+				>
+			</li>
+		</ul>
+		<!-- Search Input -->
+		<!-- 
+		<div class="hidden md:flex gap-1">
+			<SearchBox client:load />
+		</div>
+ -->
+		<!-- Hamburger Icon -->
+		<button
+			id="menu-btn"
+			aria-label="Open navigation menu"
+			class="hamburger block focus:outline-none md:hidden"
+		>
+			<span class="hamburger-top"></span>
+			<span class="hamburger-middle"></span>
+			<span class="hamburger-bottom"></span>
+		</button>
+
+		<!-- Mobile Menu -->
+		<div id="slideover-container" class="invisible fixed inset-0 z-10 h-full w-full">
+			<div
+				id="slideover-bg"
+				class="absolute inset-0 z-0 h-full w-full bg-rose-100 opacity-0 transition-all duration-500 ease-out"
+			>
+			</div>
+
+			<div
+				id="slideover"
+				class="absolute top-0 right-0 flex h-full w-64 translate-x-full flex-col justify-between space-y-10 overflow-scroll bg-white px-5 pt-20 transition-all duration-500 ease-out"
+			>
+				<ul class="flex flex-col items-center space-y-10 font-medium">
+					<li>
+						<a href="/#home" aria-label="Go to main page" class="nav-link">Home</a>
+					</li>
+					<li>
+						<a href="/#catalog" aria-label="Watch all sweet products in Catalog" class="nav-link"
+							>Catalog</a
+						>
+					</li>
+					<li>
+						<a href="/#reviews" aria-label="Read reviews from clients" class="nav-">Reviews</a>
+					</li>
+					<li>
+						<a href="/#how-to-order" aria-label="How to order form" class="nav-link">How to order</a
+						>
+					</li>
+					<li>
+						<a href="/#contacts" aria-label="Contact information" class="nav-link">Contacts</a>
+					</li>
+				</ul>
+
+				<!-- 				<div class="flex justify-center gap-1 pb-5">
+					<SearchBox client:load /> 
+				</div>
+ -->
+			</div>
+		</div>
+	</div>
+</nav>
+
+<script>
+	import '../js/nav.js'
+</script>
