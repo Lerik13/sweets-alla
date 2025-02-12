@@ -1,7 +1,12 @@
 ---
 import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
+import { getSettings } from '../lib/data-services'
 
+const contactData = await getSettings()
+//console.log('-----------------------')
+//console.log(data)
+/*
 const contactData = {
 	email: 'TkachenkoAlluska@gmail.com',
 	phoneText: '+1 (780) 446-1531',
@@ -12,7 +17,7 @@ const contactData = {
 	whatsapp: '#',
 	viber: '#',
 	developer: 'https://portfolio-kv.netlify.app'
-}
+}*/
 ---
 
 <footer id="contacts" data-anchor="contacts" class="mt-auto flex bg-rose-300">
@@ -25,7 +30,7 @@ const contactData = {
 					</a>
 					<div class="flex gap-x-4">
 						<a
-							href=`${contactData.facebook}`
+							href=`${contactData?.facebook}`
 							target="_blank"
 							aria-label="Contact in Facebook"
 							class="text-neutral-50 transition-transform duration-300 hover:scale-110 hover:text-rose-700"
@@ -33,7 +38,7 @@ const contactData = {
 							<Icon name="mdi:facebook" width="40" height="40" />
 						</a>
 						<a
-							href=`${contactData.instagram}`
+							href=`${contactData?.instagram}`
 							target="_blank"
 							aria-label="Contact in Instagram"
 							class="text-neutral-50 transition-transform duration-300 hover:scale-110 hover:text-rose-700"
@@ -86,22 +91,22 @@ const contactData = {
 				<h4 class="mt-5 mb-3 text-lg font-semibold">Contacts</h4>
 				<div class="flex flex-col gap-y-2">
 					<a
-						href=`tel:${contactData.phoneValue}`
+						href=`tel:${contactData?.phoneValue}`
 						aria-label="Contact by phone"
 						class="hover:font-bold hover:text-rose-900"
 					>
-						{contactData.phoneText}
+						{contactData?.phoneText}
 					</a>
 					<a
-						href=`mailto:${contactData.email}`
+						href=`mailto:${contactData?.email}`
 						aria-label="Contact by email"
 						class="hover:font-bold hover:text-rose-900"
 					>
-						{contactData.email}
+						{contactData?.email}
 					</a>
 
 					<a
-						href=`${contactData.developer}`
+						href=`${contactData?.developer}`
 						target="_blank"
 						aria-label="See who developed this website"
 						class="mt-10 flex"
