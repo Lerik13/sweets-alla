@@ -5,7 +5,7 @@ import { Image } from 'astro:assets'
 
 <nav class="relative mx-auto p-6 lg:container">
 	<!-- Flex container -->
-	<div class="flex items-center justify-between">
+	<div class="flex items-center justify-between gap-5">
 		<!-- Logo -->
 		<a href="/" class="flex justify-center" aria-label="Go to main page">
 			<Image src="/logo2.svg" alt="Logo" width={180} height={50} />
@@ -84,25 +84,45 @@ import { Image } from 'astro:assets'
 			>
 				<ul class="flex flex-col items-center space-y-10 font-medium">
 					<li>
-						<a href="/#home" aria-label="Go to main page" class="nav-link">Home</a>
-					</li>
-					<li>
-						<a href="/#catalog" aria-label="Watch all sweet products in Catalog" class="nav-link"
-							>Catalog</a
+						<a
+							href="/#home"
+							aria-label="Go to main page"
+							class="nav-link hover:font-bold hover:text-rose-700">Home</a
 						>
 					</li>
 					<li>
-						<a href="/#reviews" aria-label="Read reviews from clients" class="nav-">Reviews</a>
-					</li>
-					<li>
-						<a href="/#how-to-order" aria-label="How to order form" class="nav-link">How to order</a
+						<a
+							href="/#catalog"
+							aria-label="Watch all sweet products in Catalog"
+							class="nav-link hover:font-bold hover:text-rose-700">Catalog</a
 						>
 					</li>
 					<li>
-						<a href="/#contacts" aria-label="Contact information" class="nav-link">Contacts</a>
+						<a
+							href="/#reviews"
+							aria-label="Read reviews from clients"
+							class="nav-link hover:font-bold hover:text-rose-700">Reviews</a
+						>
+					</li>
+					<li>
+						<a
+							href="/#how-to-order"
+							aria-label="How to order form"
+							class="nav-link hover:font-bold hover:text-rose-700">How to order</a
+						>
+					</li>
+					<li>
+						<a
+							href="/#contacts"
+							aria-label="Contact information"
+							class="nav-link hover:font-bold hover:text-rose-700">Contacts</a
+						>
 					</li>
 				</ul>
 
+				<a href="/" class="flex justify-center pb-5" aria-label="Go to main page">
+					<Image src="/logo2.svg" alt="Logo" width={180} height={50} />
+				</a>
 				<!-- 				<div class="flex justify-center gap-1 pb-5">
 					<SearchBox client:load /> 
 				</div>
