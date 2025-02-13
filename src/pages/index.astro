@@ -1,7 +1,63 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components'
+import Layout from '../layouts/Layout.astro'
+import Button from '../components/Button.astro'
+import CarouselHero from '../components/CarouselHero.astro'
+import { getSettings } from '../lib/data-services'
+
+const contactData = await getSettings()
 ---
 
 <Layout>
-	<h1 class="text-7xl">Hello</h1>
+	<!-- Hero Section -->
+	<section id="home" data-anchor="home">
+		<div class="container mx-auto flex flex-col-reverse items-center md:h-[40rem] md:flex-row">
+			<div
+				class="flex w-full flex-col items-center justify-between space-y-12 border-0 border-green-500 p-2 pt-0 md:h-[40rem] md:h-full md:w-1/2 md:items-start md:space-y-0"
+			>
+				<div class="mt-10 flex flex-col items-center space-y-7 md:mt-20 md:items-start">
+					<h1 class="font-serif text-5xl leading-[3rem] md:text-6xl md:leading-[4rem]">
+						Delicious cakes &amp;<br />
+						desserts for you!
+					</h1>
+					<p class="text-xl">
+						A large selection of delecious cakes, desserts and pastries.<br />
+						Suitable for both holidays and regular days. Delicious!
+					</p>
+					<div class="flex">
+						<Button text="Order now" desc="Go to contact form" href="/#how-to-order" />
+					</div>
+				</div>
+				<div class="flex gap-x-4">
+					<a
+						href=`${contactData.facebook}`
+						target="_blank"
+						aria-label="Contact in Facebook"
+						class="rounded-full border border-neutral-400 p-2 text-rose-400 transition-transform duration-300 hover:scale-110 hover:text-rose-700"
+					>
+						<Icon name="ri:facebook-fill" width="30" height="30" />
+					</a>
+					<a
+						href=`${contactData.instagram}`
+						target="_blank"
+						aria-label="Contact in Instagram"
+						class="rounded-full border border-neutral-400 p-2 text-rose-400 transition-transform duration-300 hover:scale-110 hover:text-rose-700"
+					>
+						<Icon name="mdi:instagram" width="30" height="30" />
+					</a>
+					<a
+						href=`tel:${contactData.phoneValue}`
+						aria-label="Contact by phone"
+						class="rounded-full border border-neutral-400 p-2 text-rose-400 transition-transform duration-300 hover:scale-110 hover:text-rose-700"
+					>
+						<Icon name="mdi:phone" width="30" height="30" />
+					</a>
+				</div>
+			</div>
+
+			<div class="h-[30rem] w-full overflow-hidden md:h-full md:w-1/2">
+				<CarouselHero />
+			</div>
+		</div>
+	</section>
 </Layout>

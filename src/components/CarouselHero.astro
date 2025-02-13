@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets'
+import { getHero } from '../lib/data-services'
+
+type HeroData = {
+	_id: number
+	title: string
+	image: string
+}
+
+const heroData = await getHero()
+const len = heroData.length || 0;
+---
+
+<div class="carouselHero h-full relative">
+	{heroData.map((el, i) => (
+		<div id=`carouselHero-slide-${i}` class="carouselHero-slide w-full h-full relative">
+			<Image src={el.image} alt='Hero block image' width="800" height="800" class="object-cover w-full h-full" />
+			
+			{ (el.title !== '') &&
+			<div class="absolute top-3/4 font-serif text-brightRed text-2xl w-full flex justify-center">
+				<div class="border border-pink-700 p-2">
+					<p class="w-fit p-[10px] bg-white bg-opacity-50">
+						{el.title}
+					</p>
+				</div>
+			</div>
+			}
+		</div>
+	))}
+
+	<div class="absolute z-10 bottom-0 w-full h-[50px] flex justify-center gap-6">
+		{heroData.map((el, i) =>
+			<span id=`carouselHero-bullet-${i}` class='carouselHero-bullet w-[8px] h-[8px] rounded-full hover:cursor-pointer bg-white hover:bg-brightRed'></span>
+		)}
+	</div>
+
+</div>
+
+<style>
+	.active-bullet {
+		position: relative;
+		background-color: var(--brightRed);
+	}
+	.active-bullet:before {
+		content: '';
+		position: absolute;
+		width: 24px;
+		height: 24px;
+		top: -8px;
+		left: -8px;
+		border: 1px solid var(--brightRed);
+		border-radius: 50px;
+	}
+	.carouselHero-slide {
+		visibility: hidden;
+		opacity: 0;
+		height: 0;
+		transition: opacity 0.6s linear;
+	}
+	.carouselHero-slide.show {
+		visibility: visible;
+		opacity: 1;
+		height: 100%;
+		//transition-delay: 0s;
+	}
+</style>
+
+<script define:vars={{ len }}>
+	let dots;
+	let active_bullet = 0;
+
+	function changeBullet(i = 0) {
+		document.querySelectorAll(".carouselHero-slide").forEach(slide => {
+			slide.classList.remove("show");
+		})
+		document.querySelector(`#carouselHero-slide-${i}`).classList.add("show");
+
+		document.querySelectorAll(".carouselHero-bullet").forEach(bullet => {
+			bullet.classList.remove("active-bullet");
+		})
+		document.querySelector(`#carouselHero-bullet-${i}`).classList.add("active-bullet");
+	}
+
+	for (let i = 0; i < len; i++) {
+		document.querySelector(`#carouselHero-bullet-${i}`).addEventListener('click', () => {
+			clearInterval(dots);
+			changeBullet(i);
+			//active_bullet = i;
+			//startInterval();
+		})
+	}
+
+	function startInterval() {
+		changeBullet(); //active_bullet++;
+
+		dots = setInterval(function() {
+			moveBulletRight();
+		}, 3000)
+	}
+	
+	startInterval();
+	//changeBullet();
+
+	let touchstartX = 0;
+	let touchendX = 0;
+
+	function moveBulletLeft() {
+		if (active_bullet === 0) {
+			active_bullet = len-1;
+		} else {
+			active_bullet--;
+		}
+		changeBullet(active_bullet);
+	}
+
+	function moveBulletRight() {
+		if (active_bullet+1 < len) {
+			active_bullet++;
+		} else {
+			active_bullet = 0;
+		}
+		changeBullet(active_bullet);
+	}
+
+	function checkDirection() {
+		if (touchendX < touchstartX) { clearInterval(dots); moveBulletLeft(); } // swiped left
+		if (touchendX > touchstartX) { clearInterval(dots); moveBulletRight(); } // swiped right
+	}
+	
+	if (screen.width < 768) { // swipe is working only for Mobile version
+		document.querySelector('.carouselHero').addEventListener('touchstart', e => {
+			touchstartX = e.changedTouches[0].screenX
+		})
+
+		document.querySelector('.carouselHero').addEventListener('touchend', e => {
+			touchendX = e.changedTouches[0].screenX
+			checkDirection()
+		})
+	}
+</script>
+

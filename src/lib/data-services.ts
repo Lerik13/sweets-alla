@@ -10,3 +10,14 @@ export async function getSettings() {
 
 	return data
 }
+
+export async function getHero() {
+	const { data, error } = await supabase.from('hero').select('*')
+
+	if (error) {
+		console.error(error)
+		throw new Error('Hero data could not be loaded')
+	}
+
+	return data
+}
