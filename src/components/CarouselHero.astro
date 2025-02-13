@@ -8,7 +8,7 @@ type HeroData = {
 	image: string
 }
 
-const heroData = await getHero()
+const heroData:HeroData[] = await getHero()
 const len = heroData.length || 0;
 ---
 

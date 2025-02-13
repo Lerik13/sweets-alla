@@ -3,6 +3,11 @@ import Button from './Button.astro'
 import ProductCard from './ProductCard.astro'
 import { getProductsByCategory } from '../lib/data-services'
 
+type ProductData = {
+	id: number
+	name: string
+	image: string
+}
 interface Props {
 	id: string
 	categoryId: number
@@ -10,7 +15,7 @@ interface Props {
 }
 const { id, categoryId, active = false } = Astro.props as Props
 
-const products = await getProductsByCategory(categoryId)
+const products: ProductData[] = await getProductsByCategory(categoryId)
 ---
 
 <div

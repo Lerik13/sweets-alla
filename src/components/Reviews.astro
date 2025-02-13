@@ -1,0 +1,147 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import { getReviews } from '../lib/data-services'
+
+type ReviewData = {
+	name?: string
+	title?: string
+	comment?: string
+	image: string
+}
+
+const reviews: ReviewData[] = await getReviews()
+const len = reviews.length || 0
+---
+
+<div class="relative flex flex-col overflow-hidden">
+	<div class="mt-4 flex px-4 md:justify-end">
+		<div class="flex h-[5rem] w-[9rem] items-center justify-between">
+			<button
+				id="reviews-arrow-left"
+				aria-label="Arrow left"
+				class="disabledContent arrow border-veryLightGray h-[36px] w-[36px] cursor-pointer rounded-full border text-gray-600 transition-all duration-300 ease-out"
+			>
+				<Icon name="ri:arrow-left-s-line" width="36px" class="" />
+			</button>
+			<div class="text-base">
+				<span id="reviews-number">1</span> / <span>{len}</span>
+			</div>
+			<button
+				id="reviews-arrow-right"
+				aria-label="Arrow right"
+				class="arrow border-veryLightGray h-[36px] w-[36px] cursor-pointer rounded-full border text-gray-600 transition-all duration-300 ease-out"
+			>
+				<Icon name="ri:arrow-right-s-line" width="36px" class="" />
+			</button>
+		</div>
+	</div>
+	<div class="reviews flex transition-all duration-300 ease-out">
+		{
+			reviews.map((review) => (
+				<div class="review flex grid max-w-full shrink-0 flex-grow basis-full grid-cols-1 flex-col md:max-w-3xl md:grid-cols-7 md:flex-row xl:max-w-6xl">
+					<div class="col-span-3 h-[20rem] overflow-hidden md:h-auto lg:h-[20rem] xl:h-[24rem]">
+						<Image
+							src={review.image}
+							alt={review.name}
+							width="600"
+							height="600"
+							class="h-full w-full object-cover"
+						/>
+					</div>
+					<div class="col-span-4 flex h-auto flex-col space-y-4 px-5 pt-10 md:justify-center md:pt-2 md:pr-10 md:pl-10 lg:pr-24 xl:pr-32 xl:pl-20">
+						<p class="text-lg font-semibold">{review.name}</p>
+						<p class="text-base font-semibold">{review.title}</p>
+						<p class="text-justify text-base">{review.comment}</p>
+					</div>
+				</div>
+			))
+		}
+	</div>
+</div>
+
+<style>
+	.disabledContent {
+		pointer-events: none;
+		color: var(--veryLightGray);
+	}
+</style>
+
+<script define:vars={{ len }}>
+	let slideIndex = 0
+
+	let shift
+	let unit
+
+	const calcShift = () => {
+		if (screen.width > 1439) {
+			// max-w-6xl
+			shift = 72
+			unit = 'rem'
+		} else if (screen.width > 975) {
+			// max-w-3xl
+			shift = 48
+			unit = 'rem'
+		} else {
+			// max-w-full
+			shift = 100
+			unit = '%'
+		}
+	}
+	calcShift()
+	window.addEventListener('resize', calcShift)
+
+	function changeSlide(i) {
+		slideIndex = i
+
+		document.querySelector('#reviews-arrow-left').classList.remove('disabledContent')
+		document.querySelector('#reviews-arrow-right').classList.remove('disabledContent')
+		if (slideIndex === 0) {
+			document.querySelector('#reviews-arrow-left').classList.add('disabledContent')
+		}
+		if (slideIndex === len - 1) {
+			document.querySelector('#reviews-arrow-right').classList.add('disabledContent')
+		}
+
+		document.querySelector('.reviews').style.transform = `translate(-${shift * slideIndex}${unit})`
+		document.querySelector('#reviews-number').innerHTML = slideIndex + 1
+	}
+
+	function moveSliderLeft() {
+		slideIndex--
+		changeSlide(slideIndex)
+	}
+
+	function moveSliderRight() {
+		slideIndex++
+		changeSlide(slideIndex)
+	}
+
+	document.querySelector('#reviews-arrow-left').addEventListener('click', moveSliderLeft)
+	document.querySelector('#reviews-arrow-right').addEventListener('click', moveSliderRight)
+
+	// Swipe for Mobile devices
+	let touchstartX = 0
+	let touchendX = 0
+
+	function checkDirection() {
+		if (touchendX < touchstartX) {
+			slideIndex > 0 && moveSliderLeft()
+		} // swiped left
+		if (touchendX > touchstartX) {
+			slideIndex < len - 1 && moveSliderRight()
+		} //swiped right
+	}
+
+	if (screen.width < 768) {
+		// swipe is working only for Mobile version
+		document.querySelector('.reviews').addEventListener('touchstart', (e) => {
+			touchstartX = e.changedTouches[0].screenX
+		})
+
+		document.querySelector('.reviews').addEventListener('touchend', (e) => {
+			touchendX = e.changedTouches[0].screenX
+			checkDirection()
+		})
+	}
+</script>

@@ -33,13 +33,28 @@ export async function getCategories() {
 	return data
 }
 
+export async function getReviews(approvedOnly = true) {
+	const { data, error } = await supabase
+		.from('reviews')
+		.select('*')
+		.eq('approved', true)
+		.order('order', { ascending: true })
+
+	if (error) {
+		console.error(error)
+		throw new Error('Reviews could not be loaded')
+	}
+
+	return data
+}
+
 export async function getProductsByCategory(categoryId, from = 0, to = 4) {
 	const { data, error } = await supabase
 		.from('products')
 		.select('*')
 		.eq('categoryId', categoryId)
 		.range(from, to)
-		.order('order', 'asc')
+		.order('order', { ascending: true })
 
 	if (error) {
 		console.error(error)
