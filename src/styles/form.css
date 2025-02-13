@@ -29,7 +29,7 @@
 	padding: 0 0.35rem;
 	/* padding: 0.1rem 0.35rem; */
 	background-color: var(--veryLightGray);
-	transition: 
+	transition:
 		transform var(--_tspeed_fast) var(--_ttype_squish),
 		background-color var(--_tspeed_fast) var(--_ttype_squish);
 }
