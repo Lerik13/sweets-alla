@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro'
 import Button from '../components/Button.astro'
 import CarouselHero from '../components/CarouselHero.astro'
 import { getSettings } from '../lib/data-services'
+import TabCatalog from '../components/TabCatalog.astro'
 
 const contactData = await getSettings()
 ---
@@ -60,4 +61,68 @@ const contactData = await getSettings()
 			</div>
 		</div>
 	</section>
+
+	<!-- Catalog -->
+	<section id="catalog" data-anchor="catalog">
+		<div class="container mx-auto mt-16 flex flex-col space-y-10 md:mt-20 md:space-y-12">
+			<h2 class="flex justify-center pr-2 text-center font-serif text-5xl md:text-6xl">Catalog</h2>
+			<div
+				role="tablist"
+				aria-label="Tabs with Catalog of products by categories"
+				class="col-auto mx-auto grid w-max grid-cols-2 items-center gap-y-3 overflow-hidden px-[3px] font-semibold transition md:grid-cols-4 md:text-base"
+			>
+				<button
+					role="tab"
+					aria-selected="true"
+					aria-controls="panel-cake"
+					id="tab-cake"
+					tabindex="0"
+					class="tab h-10 cursor-pointer border-b border-rose-700 px-6 text-lg text-rose-700 md:text-xl"
+				>
+					Popular cakes
+				</button>
+				<button
+					role="tab"
+					aria-selected="false"
+					aria-controls="panel-cupcake"
+					id="tab-cupcake"
+					tabindex="-1"
+					class="tab h-10 cursor-pointer border-b border-neutral-400 px-6 text-lg md:text-xl"
+				>
+					Cupcakes
+				</button>
+				<button
+					role="tab"
+					aria-selected="false"
+					aria-controls="panel-cake-pop"
+					id="tab-cake-pop"
+					tabindex="-1"
+					class="tab h-10 cursor-pointer border-b border-neutral-400 px-6 text-lg md:text-xl"
+				>
+					Cake pops
+				</button>
+				<button
+					role="tab"
+					aria-selected="false"
+					aria-controls="panel-gluten-free"
+					id="tab-gluten-free"
+					tabindex="-1"
+					class="tab h-10 cursor-pointer border-b border-neutral-400 px-6 text-lg md:text-xl"
+				>
+					Gluten-free <span class="hidden lg:inline">desserts</span>
+				</button>
+			</div>
+			<!-- Tab Content -->
+			<div class="relative mt-6">
+				<TabCatalog id="panel-cake" categoryId={1} active={true} />
+				<TabCatalog id="panel-cupcake" categoryId={2} />
+				<TabCatalog id="panel-cake-pop" categoryId={3} />
+				<TabCatalog id="panel-gluten-free" categoryId={4} />
+			</div>
+		</div>
+	</section>
 </Layout>
+
+<script>
+	import '../js/tabs.js'
+</script>

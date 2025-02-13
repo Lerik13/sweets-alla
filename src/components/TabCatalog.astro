@@ -1,0 +1,41 @@
+---
+import Button from './Button.astro'
+import ProductCard from './ProductCard.astro'
+import { getProductsByCategory } from '../lib/data-services'
+
+interface Props {
+	id: string
+	categoryId: number
+	active?: boolean
+}
+const { id, categoryId, active = false } = Astro.props as Props
+
+const products = await getProductsByCategory(categoryId)
+---
+
+<div
+	role="tabpanel"
+	id={id}
+	class={active
+		? 'tab-panel w-full flex flex-col opacity-100 transition duration-700 '
+		: 'tab-panel w-full invisible absolute top-0 opacity-0 transition duration-700'}
+>
+	<div class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+		<ProductCard id={products[1].id} name={products[1].name} image={products[1].image} />
+		<ProductCard id={products[2].id} name={products[2].name} image={products[2].image} />
+		<ProductCard
+			id={products[0].id}
+			name={products[0].name}
+			image={products[0].image}
+			isBigger={true}
+			addStyle="col-span-2 row-span-2"
+		/>
+		<ProductCard id={products[3].id} name={products[3].name} image={products[3].image} />
+		<ProductCard id={products[4].id} name={products[4].name} image={products[4].image} />
+	</div>
+	<div class="my-5 flex justify-center">
+		<div class="flex">
+			<Button text="See more" desc="See more products" href={`/catalog/${categoryId}`} />
+		</div>
+	</div>
+</div>

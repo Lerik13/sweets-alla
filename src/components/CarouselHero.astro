@@ -3,7 +3,7 @@ import { Image } from 'astro:assets'
 import { getHero } from '../lib/data-services'
 
 type HeroData = {
-	_id: number
+	id: number
 	title: string
 	image: string
 }
@@ -18,7 +18,7 @@ const len = heroData.length || 0;
 			<Image src={el.image} alt='Hero block image' width="800" height="800" class="object-cover w-full h-full" />
 			
 			{ (el.title !== '') &&
-			<div class="absolute top-3/4 font-serif text-brightRed text-2xl w-full flex justify-center">
+			<div class="absolute top-4/6 md:top-3/4 font-serif text-brightRed text-2xl w-full flex justify-center">
 				<div class="border border-pink-700 p-2">
 					<p class="w-fit p-[10px] bg-white bg-opacity-50">
 						{el.title}
@@ -29,7 +29,7 @@ const len = heroData.length || 0;
 		</div>
 	))}
 
-	<div class="absolute z-10 bottom-0 w-full h-[50px] flex justify-center gap-6">
+	<div class="absolute z-1 bottom-0 w-full h-[50px] flex justify-center gap-6">
 		{heroData.map((el, i) =>
 			<span id=`carouselHero-bullet-${i}` class='carouselHero-bullet w-[8px] h-[8px] rounded-full hover:cursor-pointer bg-white hover:bg-brightRed'></span>
 		)}

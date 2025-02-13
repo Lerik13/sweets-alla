@@ -21,3 +21,30 @@ export async function getHero() {
 
 	return data
 }
+
+export async function getCategories() {
+	const { data, error } = await supabase.from('categories').select('*')
+
+	if (error) {
+		console.error(error)
+		throw new Error('Categories could not be loaded')
+	}
+
+	return data
+}
+
+export async function getProductsByCategory(categoryId, from = 0, to = 4) {
+	const { data, error } = await supabase
+		.from('products')
+		.select('*')
+		.eq('categoryId', categoryId)
+		.range(from, to)
+		.order('order', 'asc')
+
+	if (error) {
+		console.error(error)
+		throw new Error('Products of chosen category could not be loaded')
+	}
+
+	return data
+}
