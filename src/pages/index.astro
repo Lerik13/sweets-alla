@@ -1,10 +1,15 @@
 ---
 import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
 import Layout from '../layouts/Layout.astro'
 import Button from '../components/Button.astro'
 import CarouselHero from '../components/CarouselHero.astro'
 import { getSettings } from '../lib/data-services'
 import TabCatalog from '../components/TabCatalog.astro'
+
+import featureImage_1 from '../assets/images/feature1.jpg'
+import featureImage_2 from '../assets/images/feature2.jpg'
+import featureImage_3 from '../assets/images/feature3.jpg'
 
 const contactData = await getSettings()
 ---
@@ -121,8 +126,67 @@ const contactData = await getSettings()
 			</div>
 		</div>
 	</section>
-</Layout>
 
-<script>
-	import '../js/tabs.js'
-</script>
+	<!-- Features Section -->
+	<section id="features" data-anchor="features">
+		<div class="container mx-auto mt-16 flex flex-col space-y-10 px-6 md:mt-20 md:space-y-12">
+			<h2 class="flex justify-center pr-2 text-center font-serif text-5xl md:text-6xl">
+				Our advantages
+			</h2>
+			<div
+				class="flex flex-col justify-center gap-8 md:flex-row md:items-end md:gap-4 lg:gap-[4rem] xl:gap-[6rem]"
+			>
+				<div class="flex flex-row items-center space-y-3 space-x-3 md:w-[14rem] md:flex-col">
+					<div class="w-[10rem] md:w-[13rem]">
+						<Image
+							src={featureImage_1}
+							alt="advantage 1"
+							format="avif"
+							class="w-full rounded-full"
+						/>
+					</div>
+					<div class="flex flex-col gap-2 md:items-center">
+						<h6 class="text-lg font-semibold">High quality</h6>
+						<p class="text-base md:px-6 md:text-center">Handmade cake & natural ingredients</p>
+					</div>
+				</div>
+				<div class="flex flex-row items-center space-y-3 space-x-3 md:w-[17rem] md:flex-col">
+					<div class="w-[10rem] md:w-[16rem]">
+						<Image
+							src={featureImage_2}
+							alt="advantage 2"
+							format="avif"
+							class="w-full rounded-full"
+						/>
+					</div>
+					<div class="flex flex-col gap-2 md:items-center">
+						<h6 class="text-lg font-semibold">Beautiful decor</h6>
+						<p class="text-base md:px-6 md:text-center">
+							Variety theme decoration for special occasion
+						</p>
+					</div>
+				</div>
+				<div class="flex flex-row items-center space-y-3 space-x-3 md:w-[14rem] md:flex-col">
+					<div class="w-[10rem] md:w-[13rem]">
+						<Image
+							src={featureImage_3}
+							alt="advantage 3"
+							format="avif"
+							class="w-full rounded-full"
+						/>
+					</div>
+					<div class="flex flex-col gap-2 md:items-center">
+						<h6 class="text-lg font-semibold">Fast delivery</h6>
+						<p class="text-base md:px-6 md:text-center">
+							Delivery in Edmonton and surrounding area
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		import '../js/tabs.js'
+	</script>
+</Layout>
