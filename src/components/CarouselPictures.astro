@@ -17,10 +17,18 @@ const imagesArr = [image, ...images.split(',')]
 		<div class=" w-full h-[27rem] md:h-[27rem] lg:h-[31rem] overflow-hidden">
 			<Image id="carousel-pic-main" src={image} alt={name} width="600" height="600" class="object-cover w-full h-full" />
 		</div>
-		<button id="carousel-pics-arrow-left" aria-label="Arrow left" class="disabledContent arrow w-[40px] h-[40px] absolute top-[calc(50%-20px)] left-3 text-rose-700 hover:scale-120 border border-neutral-300 rounded-full transition-all duration-300 ease-out cursor-pointer">
+		<button
+			id="carousel-pics-arrow-left"
+			aria-label="Arrow left"
+			class="disabledContent arrow w-[40px] h-[40px] absolute top-[calc(50%-20px)] left-3 text-rose-700 hover:scale-120 border border-neutral-300 rounded-full transition-all duration-300 ease-out cursor-pointer"
+		>
 			<Icon name="mdi:arrow-left" width={40} height={40} />
 		</button>
-		<button id="carousel-pics-arrow-right" aria-label="Arrow right" class="disabledContent arrow w-[40px] h-[40px] absolute top-[calc(50%-20px)] right-3  hover:scale-120 text-rose-700 transition-all duration-300 ease-out border border-neutral-300 rounded-full cursor-pointer">
+		<button
+			id="carousel-pics-arrow-right"
+			aria-label="Arrow right"
+			class="disabledContent arrow w-[40px] h-[40px] absolute top-[calc(50%-20px)] right-3 hover:scale-120 text-rose-700 transition-all duration-300 ease-out border border-neutral-300 rounded-full cursor-pointer"
+		>
 			<Icon name="mdi:arrow-right" width={40} height={40} />
 		</button>
 	</div>

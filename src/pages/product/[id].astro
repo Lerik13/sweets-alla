@@ -1,10 +1,9 @@
 ---
-//export const prerender = true;
-
 import Layout from '../../layouts/Layout.astro'
 import Button from '../../components/Button.astro'
 import CarouselPictures from '../../components/CarouselPictures.astro'
-import { getProducts, getProduct } from '../../lib/data-services'
+import CarouselRandomProducts from '../../components/CarouselRandomProducts.astro'
+import { getProducts } from '../../lib/data-services'
 
 export async function getStaticPaths() {
 	//const products = await fetch(BASE_URL + PRODUCTS_ALL_URL).then((res) => res.json())
@@ -34,7 +33,7 @@ type ProductData = {
 interface Props {
 	product: ProductData
 }
-//const product = await getProduct()
+
 const { id } = Astro.params
 const { product } = Astro.props
 ---
@@ -83,5 +82,7 @@ const { product } = Astro.props
 				</div>
 			</div>
 		</div>
+
+		<CarouselRandomProducts />
 	</div>
 </Layout>

@@ -1,0 +1,108 @@
+---
+import { Icon } from 'astro-icon/components'
+import ProductCard from './ProductCard.astro'
+import { getRandomProducts } from '../lib/data-services'
+
+const products = await getRandomProducts()
+const len = products.length
+---
+
+<div class="flex flex-col space-y-10 pt-10">
+	<h5 class="flex justify-center font-serif text-3xl">You might also like</h5>
+	<div class="relative flex">
+		<div class="mx-[3.5rem] flex w-full overflow-hidden">
+			<div class="carousel-random flex gap-[2rem] transition-all duration-300 ease-out">
+				{
+					products.map((product) => (
+						<ProductCard
+							id={product._id}
+							name={product.name}
+							image={product.image}
+							addStyle="w-[11rem] lg:w-[15rem] xl:w-[20rem] text-base"
+						/>
+					))
+				}
+			</div>
+		</div>
+		<button
+			id="carousel-random-arrow-left"
+			aria-label="Arrow left"
+			class="disabledContent arrow absolute top-[calc(50%-20px)] left-0 h-[40px] w-[40px] cursor-pointer rounded-full border border-neutral-300 text-rose-700 transition-all duration-300 ease-out hover:scale-120"
+		>
+			<Icon name="mdi:arrow-left" width={40} height={40} />
+		</button>
+		<button
+			id="carousel-random-arrow-right"
+			aria-label="Arrow right"
+			class="arrow absolute top-[calc(50%-20px)] right-0 h-[40px] w-[40px] cursor-pointer rounded-full border border-neutral-300 text-rose-700 transition-all duration-300 ease-out hover:scale-120"
+		>
+			<Icon name="mdi:arrow-right" width={40} height={40} />
+		</button>
+	</div>
+</div>
+
+<style>
+	.disabledContent {
+		pointer-events: none;
+		color: gray;
+	}
+</style>
+
+<script define:vars={{ len }}>
+	let slideIndex = 0
+	let shift = 13
+	let limit_right = len - 1
+
+	const calcShift = () => {
+		if (screen.width > 1228) {
+			shift = 22
+			limit_right = limit_right - 3
+		} else if (screen.width > 1023) {
+			shift = 22
+			limit_right = limit_right - 2
+		} else if (screen.width > 819) {
+			shift = 17
+			limit_right = limit_right - 2
+		} else if (screen.width > 614) {
+			shift = 13
+			limit_right = limit_right - 2
+		} else if (screen.width > 454) {
+			shift = 13
+			limit_right = limit_right - 1
+		} else {
+			shift = 13
+			limit_right = len - 1
+		}
+	}
+	calcShift()
+	window.addEventListener('resize', calcShift)
+
+	function changeSlide(i) {
+		slideIndex = i
+
+		document.querySelector('#carousel-random-arrow-left').classList.remove('disabledContent')
+		document.querySelector('#carousel-random-arrow-right').classList.remove('disabledContent')
+		if (slideIndex === 0) {
+			document.querySelector('#carousel-random-arrow-left').classList.add('disabledContent')
+		}
+		if (slideIndex === limit_right) {
+			document.querySelector('#carousel-random-arrow-right').classList.add('disabledContent')
+		}
+
+		document.querySelector('.carousel-random').style.transform =
+			`translate(-${shift * slideIndex}rem)`
+	}
+
+	function moveSliderLeft() {
+		slideIndex--
+		changeSlide(slideIndex)
+	}
+
+	function moveSliderRight() {
+		slideIndex++
+		changeSlide(slideIndex)
+	}
+
+	document.querySelector('#carousel-random-arrow-left').addEventListener('click', moveSliderLeft)
+	document.querySelector('#carousel-random-arrow-right').addEventListener('click', moveSliderRight)
+</script>

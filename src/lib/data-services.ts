@@ -85,3 +85,15 @@ export async function getProduct(id) {
 
 	return data
 }
+
+export async function getRandomProducts() {
+	//Invoke custom function in DB
+	const { data, error } = await supabase.rpc('get_random_products')
+
+	if (error) {
+		console.error(error)
+		throw new Error('Products could not be loaded!')
+	}
+
+	return data
+}
