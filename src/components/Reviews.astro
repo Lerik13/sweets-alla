@@ -20,9 +20,9 @@ const len = reviews.length || 0
 			<button
 				id="reviews-arrow-left"
 				aria-label="Arrow left"
-				class="disabledContent arrow border-veryLightGray h-[36px] w-[36px] cursor-pointer rounded-full border text-gray-600 transition-all duration-300 ease-out"
+				class="disabledContent arrow h-[40px] w-[40px] cursor-pointer rounded-full border border-neutral-400 text-rose-700 transition-all duration-300 ease-out hover:scale-120"
 			>
-				<Icon name="ri:arrow-left-s-line" width="36px" class="" />
+				<Icon name="mdi:arrow-left" width={36} height={36} class="" />
 			</button>
 			<div class="text-base">
 				<span id="reviews-number">1</span> / <span>{len}</span>
@@ -30,9 +30,9 @@ const len = reviews.length || 0
 			<button
 				id="reviews-arrow-right"
 				aria-label="Arrow right"
-				class="arrow border-veryLightGray h-[36px] w-[36px] cursor-pointer rounded-full border text-gray-600 transition-all duration-300 ease-out"
+				class="arrow h-[40px] w-[40px] cursor-pointer rounded-full border border-neutral-400 text-rose-700 transition-all duration-300 ease-out hover:scale-120"
 			>
-				<Icon name="ri:arrow-right-s-line" width="36px" class="" />
+				<Icon name="mdi:arrow-right" width={36} height={36} class="" />
 			</button>
 		</div>
 	</div>

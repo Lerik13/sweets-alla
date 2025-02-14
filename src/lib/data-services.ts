@@ -48,6 +48,17 @@ export async function getReviews(approvedOnly = true) {
 	return data
 }
 
+export async function getProducts() {
+	const { data, error } = await supabase.from('products').select('*, categories(name)')
+
+	if (error) {
+		console.error(error)
+		throw new Error('Products could not be loaded')
+	}
+
+	return data
+}
+
 export async function getProductsByCategory(categoryId, from = 0, to = 4) {
 	const { data, error } = await supabase
 		.from('products')
@@ -59,6 +70,17 @@ export async function getProductsByCategory(categoryId, from = 0, to = 4) {
 	if (error) {
 		console.error(error)
 		throw new Error('Products of chosen category could not be loaded')
+	}
+
+	return data
+}
+
+export async function getProduct(id) {
+	const { data, error } = await supabase.from('products').select('*').eq('id', id).single()
+
+	if (error) {
+		console.error(error)
+		throw new Error('The product could not be loaded')
 	}
 
 	return data

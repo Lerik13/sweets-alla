@@ -1,0 +1,114 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+	name: string
+	image: string
+	images: string
+}
+const { name, image, images } = Astro.props as Props
+
+const imagesArr = [image, ...images.split(',')]
+---
+
+<div class="flex flex-col space-y-4 lg:space-y-6">
+	<div class="relative w-full h-full">
+		<div class=" w-full h-[27rem] md:h-[27rem] lg:h-[31rem] overflow-hidden">
+			<Image id="carousel-pic-main" src={image} alt={name} width="600" height="600" class="object-cover w-full h-full" />
+		</div>
+		<button id="carousel-pics-arrow-left" aria-label="Arrow left" class="disabledContent arrow w-[40px] h-[40px] absolute top-[calc(50%-20px)] left-3 text-rose-700 hover:scale-120 border border-neutral-300 rounded-full transition-all duration-300 ease-out cursor-pointer">
+			<Icon name="mdi:arrow-left" width={40} height={40} />
+		</button>
+		<button id="carousel-pics-arrow-right" aria-label="Arrow right" class="disabledContent arrow w-[40px] h-[40px] absolute top-[calc(50%-20px)] right-3  hover:scale-120 text-rose-700 transition-all duration-300 ease-out border border-neutral-300 rounded-full cursor-pointer">
+			<Icon name="mdi:arrow-right" width={40} height={40} />
+		</button>
+	</div>
+	<div id="carousel-pics-nav" class="flex space-x-2 flex-grow shrink-0 basis-full">
+		{imagesArr.map((img, i) => (
+			<div id=`carousel-pic-${i}` class="carousel-pic w-[4rem] lg:w-[6rem] h-[4rem] lg:h-[6rem] overflow-hidden hover:cursor-pointer border-rose-700">
+				<Image src={img} alt={name} width="600" height="600" class="object-cover w-full h-full " />
+			</div>
+		))}
+	</div>
+</div>
+
+<style>
+	.disabledContent {
+		pointer-events: none;
+		color: gray;
+	}
+</style>
+
+<script define:vars={{ imagesArr }}>
+	
+	let slideIndex = 0;
+	const len = imagesArr.length;
+
+	if (len === 1) {
+		document.querySelector('#carousel-pics-nav').classList.add('hidden');
+		document.querySelector('#carousel-pics-arrow-left').classList.add('hidden');
+		document.querySelector('#carousel-pics-arrow-right').classList.add('hidden');
+	} else {
+		changePicture(0);
+	}
+
+	function changePicture(i) {
+		slideIndex = i;
+		
+		document.querySelector('#carousel-pic-main').src = imagesArr[i];
+		document.querySelectorAll('.carousel-pic').forEach(pic => {
+			pic.classList.remove('border-4');
+		})
+		document.querySelector(`#carousel-pic-${i}`).classList.add('border-4');
+
+		document.querySelector('#carousel-pics-arrow-left').classList.remove('disabledContent');
+		document.querySelector('#carousel-pics-arrow-right').classList.remove('disabledContent');
+		if (slideIndex === 0) {
+			document.querySelector('#carousel-pics-arrow-left').classList.add('disabledContent');
+		} else if (slideIndex === len -1) {
+			document.querySelector('#carousel-pics-arrow-right').classList.add('disabledContent');
+		}
+	}
+
+	for (let i = 0; i < len; i++) {
+		document.querySelector(`#carousel-pic-${i}`).addEventListener('click', () => {
+			changePicture(i);
+		})
+	}
+
+	function moveCarouselLeft() {
+		slideIndex--;
+		changePicture(slideIndex);
+	}
+
+	function moveCarouselRight() {
+		slideIndex++;
+		changePicture(slideIndex);
+	}
+
+	document.querySelector('#carousel-pics-arrow-left').addEventListener('click', moveCarouselLeft)
+	document.querySelector('#carousel-pics-arrow-right').addEventListener('click', moveCarouselRight)
+
+/*
+	// Swipe for Mobile devices
+	let touchstartX = 0
+	let touchendX = 0
+			
+	function checkDirection() {
+		if (touchendX < touchstartX) { (slideIndex > 0) && moveCarouselLeft(); } // swiped left
+		if (touchendX > touchstartX) { (slideIndex < len-1) && moveCarouselRight(); } //swiped right
+	}
+
+	if (screen.width < 768) { // swipe is working only for Mobile version
+		document.querySelector('#carousel-pic-main').addEventListener('touchstart', e => {
+			touchstartX = e.changedTouches[0].screenX
+		})
+
+		document.querySelector('#carousel-pic-main').addEventListener('touchend', e => {
+			touchendX = e.changedTouches[0].screenX
+			checkDirection()
+		})
+	}
+	*/
+</script>
