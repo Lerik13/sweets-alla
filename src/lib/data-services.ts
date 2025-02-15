@@ -59,13 +59,22 @@ export async function getAllProducts() {
 	return data
 }
 
-export async function getProductsByCategory(categoryId, from = 0, to = 4) {
-	const { data, error } = await supabase
+export async function getProductsByCategory(categoryId, from = 0, to = 0) {
+	let query = supabase.from('products').select('id, name, image').eq('categoryId', categoryId)
+
+	// Apply range only if `to` is provided
+	if (to !== 0) {
+		query = query.range(from, to)
+	}
+
+	const { data, error } = await query.order('order', { ascending: true })
+
+	/*const { data, error } = await supabase
 		.from('products')
 		.select('*')
 		.eq('categoryId', categoryId)
 		.range(from, to)
-		.order('order', { ascending: true })
+		.order('order', { ascending: true })*/
 
 	if (error) {
 		console.error(error)

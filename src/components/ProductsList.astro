@@ -1,0 +1,35 @@
+---
+import { getProductsByCategory } from '../lib/data-services'
+
+interface Props {
+	categoryId: number
+}
+const { categoryId } = Astro.props as Props
+
+const products = await getProductsByCategory(categoryId)
+---
+
+<div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+	{
+		products.map((product) => (
+			<a
+				href={`/product/${product.id}`}
+				aria-label="Go to product page"
+				class="flex h-[14rem] flex-col space-y-2 overflow-hidden lg:h-[16rem] xl:h-[22rem]"
+			>
+				<div class="h-[12rem] overflow-hidden lg:h-[14rem] xl:h-[20rem]">
+					<img
+						src={product.image}
+						alt={product.name}
+						width="300"
+						height="300"
+						class="h-full w-full object-cover transition-all duration-300 ease-out hover:scale-110"
+					/>
+				</div>
+				<span class="flex h-[2rem] items-center truncate pl-2 text-base font-medium md:text-lg">
+					{product.name}
+				</span>
+			</a>
+		))
+	}
+</div>

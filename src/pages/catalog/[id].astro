@@ -1,0 +1,45 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import ProductsList from '../../components/ProductsList.astro'
+import { getCategories } from '../../lib/data-services'
+import CategoriesButtons from '../../components/CategoriesButtons.astro'
+
+export async function getStaticPaths() {
+	const categories = await getCategories()
+
+	return categories.map((category) => {
+		return {
+			params: { id: category.id },
+			props: { category }
+		}
+	})
+}
+
+type CategoryType = {
+	id: number
+	name: string
+	description?: string
+	order: number
+}
+interface Props {
+	category: CategoryType
+}
+
+const { id } = Astro.params
+const { category } = Astro.props
+---
+
+<Layout title={category.name}>
+	<div class="container mx-auto flex flex-col space-y-10 px-2 md:px-6 lg:space-y-12">
+		<div class="flex flex-col items-center space-y-8">
+			<h2 class="font-serif text-5xl md:text-6xl">Catalog</h2>
+		</div>
+
+		<div class="flex flex-col space-y-10 md:space-y-14">
+			<CategoriesButtons activeCategoryId={id} />
+
+			<ProductsList categoryId={category.id} />
+			<!-- <ProductCatalog param_category={category} client:load /> -->
+		</div>
+	</div>
+</Layout>

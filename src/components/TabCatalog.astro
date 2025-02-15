@@ -15,7 +15,7 @@ interface Props {
 }
 const { id, categoryId, active = false } = Astro.props as Props
 
-const products: ProductData[] = await getProductsByCategory(categoryId)
+const products: ProductData[] = await getProductsByCategory(categoryId, 0, 4)
 ---
 
 <div

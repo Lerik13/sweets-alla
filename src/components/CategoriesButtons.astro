@@ -1,0 +1,17 @@
+---
+import { getCategories } from '../lib/data-services'
+
+const categories = await getCategories()
+
+interface Props {
+	activeCategoryId : number
+}
+const {activeCategoryId = 1} = Astro.props as Props
+---
+
+<div
+	class="col-auto mx-auto mt-10 grid grid-cols-1 items-center gap-y-3 overflow-hidden font-semibold transition lg:grid-cols-4 sm:grid-cols-2"
+>
+	{categories.map((category) => <a href=`/catalog/${category.id}` aria-label=`Show ${category.name}` class={`text-lg px-6 md:text-xl text-center border-b ${category.id===Number(activeCategoryId) ? 'text-rose-700 border-rose-700' : 'border-neutral-400'}`}>{category.name[0].toUpperCase()}{category.name.slice(1)}s</a>)}
+	
+</div>

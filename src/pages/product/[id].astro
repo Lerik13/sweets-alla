@@ -43,19 +43,13 @@ const { product } = Astro.props
 			<a href="/" aria-label="Go to main page" class="hover:text-rose-700"> Home </a>
 			<span class="px-2">&gt;</span>
 			<a
-				href="/catalog"
-				aria-label="Watch all sweet products in Catalog"
+				href=`/catalog/${product.categoryId}`
+				aria-label={`Watch all ${product.categories.name} products`}
 				class="hover:text-rose-700"
 			>
-				Catalog
-			</a>
-			<span class="px-2">&gt;</span>
-			<a
-				href=`/catalog/${product.category}`
-				aria-label={`Watch all ${product.category} products`}
-				class="hover:text-rose-700"
-			>
-				{product.categories.name[0].toUpperCase() + product.categories.name.substring(1) + 's'}
+				Catalog of {
+					product.categories.name.charAt(0).toUpperCase() + product.categories.name.slice(1) + 's'
+				}
 			</a>
 			<span class="px-2">&gt;</span>
 			<span class="text-gray-400">{product.name}</span>
