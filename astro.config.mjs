@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config'
 import tailwindcss from '@tailwindcss/vite'
 import icon from 'astro-icon'
+import netlify from '@astrojs/netlify'
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,5 +18,6 @@ export default defineConfig({
 				hostname: 'zppgejyumyfevfgyicjm.supabase.co/storage/v1/s3'
 			}
 		]
-	}
+	},
+	adapter: netlify()
 })
