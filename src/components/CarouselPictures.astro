@@ -9,7 +9,7 @@ interface Props {
 }
 const { name, image, images } = Astro.props as Props
 
-const imagesArr = [image, ...images.split(',')]
+const imagesArr =  (images && images.length > 0) ? [image, ...images.split(',')] : [image]
 ---
 
 <div class="flex flex-col space-y-4 lg:space-y-6">

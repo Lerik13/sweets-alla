@@ -3,11 +3,10 @@ import Layout from '../../layouts/Layout.astro'
 import Button from '../../components/Button.astro'
 import CarouselPictures from '../../components/CarouselPictures.astro'
 import CarouselRandomProducts from '../../components/CarouselRandomProducts.astro'
-import { getProducts } from '../../lib/data-services'
+import { getAllProducts } from '../../lib/data-services'
 
 export async function getStaticPaths() {
-	//const products = await fetch(BASE_URL + PRODUCTS_ALL_URL).then((res) => res.json())
-	const products = await getProducts()
+	const products = await getAllProducts()
 
 	return products.map((product) => {
 		return {

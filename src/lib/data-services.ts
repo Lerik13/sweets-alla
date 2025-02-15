@@ -48,7 +48,7 @@ export async function getReviews(approvedOnly = true) {
 	return data
 }
 
-export async function getProducts() {
+export async function getAllProducts() {
 	const { data, error } = await supabase.from('products').select('*, categories(name)')
 
 	if (error) {
@@ -93,6 +93,17 @@ export async function getRandomProducts() {
 	if (error) {
 		console.error(error)
 		throw new Error('Products could not be loaded!')
+	}
+
+	return data
+}
+
+export async function getProductsNames() {
+	const { data, error } = await supabase.from('products').select('name')
+
+	if (error) {
+		console.error(error)
+		throw new Error('Products could not be loaded')
 	}
 
 	return data

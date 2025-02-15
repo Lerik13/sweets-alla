@@ -1,9 +1,17 @@
 ---
+export const prerender = false
+
 import { Icon } from 'astro-icon/components'
 import ProductCard from './ProductCard.astro'
 import { getRandomProducts } from '../lib/data-services'
 
-const products = await getRandomProducts()
+type ProductData = {
+	id: number
+	name: string
+	image: string
+}
+
+const products: ProductData[] = await getRandomProducts()
 const len = products.length
 ---
 
@@ -15,7 +23,7 @@ const len = products.length
 				{
 					products.map((product) => (
 						<ProductCard
-							id={product._id}
+							id={product.id}
 							name={product.name}
 							image={product.image}
 							addStyle="w-[11rem] lg:w-[15rem] xl:w-[20rem] text-base"

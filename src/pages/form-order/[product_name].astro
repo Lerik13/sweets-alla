@@ -1,0 +1,91 @@
+---
+import { Image } from 'astro:assets'
+import Layout from '../../layouts/Layout.astro'
+import Button from '../../components/Button.astro'
+import howToOrderImage from '../../assets/images/how-to-order.jpg'
+import { getProductsNames } from '../../lib/data-services'
+
+export async function getStaticPaths() {
+	const products = await getProductsNames()
+
+	return products.map((product) => {
+		return {
+			params: { product_name: product.name },
+			props: { product }
+		}
+	})
+}
+
+const { product_name } = Astro.params
+const { product } = Astro.props
+---
+
+<Layout>
+	<div class="container mx-auto mt-16 flex md:mt-20">
+		<div class="flex w-full md:w-3/5 lg:w-1/2 xl:w-2/5">
+			<div
+				class="flex h-full w-full flex-col justify-center space-y-5 px-[2rem] md:px-[2.5rem] lg:px-[3.5rem]"
+			>
+				<h2 class="pb-4 text-center font-serif text-4xl md:text-left md:text-5xl">
+					Place an order
+				</h2>
+				<p>Please leave your contact information and we will get back to you as soon as possible</p>
+				<form
+					name="form-order"
+					id="form-order"
+					method="POST"
+					data-netlify="true"
+					action="/form-order/success"
+					class="form-main"
+				>
+					<div class="input-wrapper">
+						<input
+							type="text"
+							id="name"
+							name="name"
+							class="form-input"
+							placeholder="Name"
+							autocomplete="given-name"
+							required
+						/>
+						<label for="name" class="form-label"> Name </label>
+					</div>
+					<div class="input-wrapper">
+						<input
+							type="tel"
+							id="phone"
+							name="phone"
+							class="form-input"
+							placeholder="Phone Number"
+							autocomplete="phone-fill"
+							required
+						/>
+						<label for="phone" class="form-label"> Phone Number </label>
+					</div>
+					<div class="input-wrapper">
+						<textarea id="message" name="message" class="form-input" rows="3" placeholder="Message"
+							>{product_name}</textarea
+						>
+						{
+							/*
+						<textarea id="message" name="message" rows="3" class="px-5 py-3.5 w-full bg-veryLightGray rounded-3xl" placeholder="Message">{product_name}</textarea>
+						 */
+						}
+						<label for="message" class="form-label form-label-textarea"> Message </label>
+					</div>
+					<div class="mt-8 flex justify-center md:justify-start">
+						<Button isSubmit={true} desc="Send your contact information" />
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="hidden h-[30rem] overflow-hidden md:block md:w-2/5 lg:w-1/2 xl:w-3/5">
+			<Image
+				src={howToOrderImage}
+				alt="how to order"
+				format="avif"
+				class="h-full w-full object-cover"
+			/>
+		</div>
+	</div>
+</Layout>
