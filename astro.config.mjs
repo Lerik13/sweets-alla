@@ -11,6 +11,7 @@ export default defineConfig({
 		plugins: [tailwindcss()]
 	},
 	image: {
+		domains: ['zppgejyumyfevfgyicjm.supabase.co'],
 		//serviceEntryPoint: '@astrojs/image/sharp', // or your preferred image service
 		remotePatterns: [
 			{

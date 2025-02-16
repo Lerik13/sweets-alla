@@ -10,6 +10,13 @@ type HeroData = {
 
 const heroData:HeroData[] = await getHero()
 const len = heroData.length || 0;
+const imagePath = import.meta.env.SUPABASE_URL
+console.log('-----------------------')
+console.log(imagePath)
+
+//const supabaseUrl = "https://your-supabase-project-url.supabase.co";
+//const imagePath = "your-bucket-name/path-to-image.jpg";
+//const imageUrl = `${supabaseUrl}/storage/v1/object/public/${imagePath}`;
 ---
 
 <div class="carouselHero h-full relative">

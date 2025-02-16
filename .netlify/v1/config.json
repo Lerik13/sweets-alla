@@ -1,0 +1,1 @@
+{"images":{"remote_images":["https?://your-supabase-project-url\\.supabase\\.co/.*","https://zppgejyumyfevfgyicjm\\.supabase\\.co/storage/v1/s3(:[0-9]+)?(\\/[^?#]*)?([?][^#]*)?"]},"headers":[{"for":"/_astro/*","values":{"Cache-Control":"public, max-age=31536000, immutable"}}]}
