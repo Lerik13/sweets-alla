@@ -8,40 +8,43 @@ type HeroData = {
 	image: string
 }
 
-const heroData:HeroData[] = await getHero()
-const len = heroData.length || 0;
-const imagePath = import.meta.env.SUPABASE_URL
-console.log('-----------------------')
-console.log(imagePath)
-
-//const supabaseUrl = "https://your-supabase-project-url.supabase.co";
-//const imagePath = "your-bucket-name/path-to-image.jpg";
-//const imageUrl = `${supabaseUrl}/storage/v1/object/public/${imagePath}`;
+const heroData: HeroData[] = await getHero()
+const len = heroData.length || 0
 ---
 
-<div class="carouselHero h-full relative">
-	{heroData.map((el, i) => (
-		<div id=`carouselHero-slide-${i}` class="carouselHero-slide w-full h-full relative">
-			<Image src={el.image} alt='Hero block image' width="800" height="800" class="object-cover w-full h-full" />
-			
-			{ (el.title !== '') &&
-			<div class="absolute top-4/6 md:top-3/4 font-serif text-brightRed text-2xl w-full flex justify-center">
-				<div class="border border-pink-700 p-2">
-					<p class="w-fit p-[10px] bg-white bg-opacity-50">
-						{el.title}
-					</p>
-				</div>
+<div class="carouselHero relative h-full">
+	{
+		heroData.map((el, i) => (
+			<div id={`carouselHero-slide-${i}`} class="carouselHero-slide relative h-full w-full">
+				<Image
+					src={el.image}
+					alt="Hero block image"
+					width="800"
+					height="800"
+					class="h-full w-full object-cover"
+				/>
+
+				{el.title !== '' && (
+					<div class="text-brightRed absolute top-4/6 flex w-full justify-center font-serif text-2xl md:top-3/4">
+						<div class="border border-pink-700 p-2">
+							<p class="bg-opacity-50 w-fit bg-white p-[10px]">{el.title}</p>
+						</div>
+					</div>
+				)}
 			</div>
-			}
-		</div>
-	))}
+		))
+	}
 
-	<div class="absolute z-1 bottom-0 w-full h-[50px] flex justify-center gap-6">
-		{heroData.map((el, i) =>
-			<span id=`carouselHero-bullet-${i}` class='carouselHero-bullet w-[8px] h-[8px] rounded-full hover:cursor-pointer bg-white hover:bg-brightRed'></span>
-		)}
+	<div class="absolute bottom-0 z-1 flex h-[50px] w-full justify-center gap-6">
+		{
+			heroData.map((el, i) => (
+				<span
+					id={`carouselHero-bullet-${i}`}
+					class="carouselHero-bullet hover:bg-brightRed h-[8px] w-[8px] rounded-full bg-white hover:cursor-pointer"
+				/>
+			))
+		}
 	</div>
-
 </div>
 
 <style>
@@ -73,76 +76,82 @@ console.log(imagePath)
 </style>
 
 <script define:vars={{ len }}>
-	let dots;
-	let active_bullet = 0;
+	let dots
+	let active_bullet = 0
 
 	function changeBullet(i = 0) {
-		document.querySelectorAll(".carouselHero-slide").forEach(slide => {
-			slide.classList.remove("show");
+		document.querySelectorAll('.carouselHero-slide').forEach((slide) => {
+			slide.classList.remove('show')
 		})
-		document.querySelector(`#carouselHero-slide-${i}`).classList.add("show");
+		document.querySelector(`#carouselHero-slide-${i}`).classList.add('show')
 
-		document.querySelectorAll(".carouselHero-bullet").forEach(bullet => {
-			bullet.classList.remove("active-bullet");
+		document.querySelectorAll('.carouselHero-bullet').forEach((bullet) => {
+			bullet.classList.remove('active-bullet')
 		})
-		document.querySelector(`#carouselHero-bullet-${i}`).classList.add("active-bullet");
+		document.querySelector(`#carouselHero-bullet-${i}`).classList.add('active-bullet')
 	}
 
 	for (let i = 0; i < len; i++) {
 		document.querySelector(`#carouselHero-bullet-${i}`).addEventListener('click', () => {
-			clearInterval(dots);
-			changeBullet(i);
+			clearInterval(dots)
+			changeBullet(i)
 			//active_bullet = i;
 			//startInterval();
 		})
 	}
 
 	function startInterval() {
-		changeBullet(); //active_bullet++;
+		changeBullet() //active_bullet++;
 
-		dots = setInterval(function() {
-			moveBulletRight();
+		dots = setInterval(function () {
+			moveBulletRight()
 		}, 3000)
 	}
-	
-	startInterval();
+
+	startInterval()
 	//changeBullet();
 
-	let touchstartX = 0;
-	let touchendX = 0;
+	let touchstartX = 0
+	let touchendX = 0
 
 	function moveBulletLeft() {
 		if (active_bullet === 0) {
-			active_bullet = len-1;
+			active_bullet = len - 1
 		} else {
-			active_bullet--;
+			active_bullet--
 		}
-		changeBullet(active_bullet);
+		changeBullet(active_bullet)
 	}
 
 	function moveBulletRight() {
-		if (active_bullet+1 < len) {
-			active_bullet++;
+		if (active_bullet + 1 < len) {
+			active_bullet++
 		} else {
-			active_bullet = 0;
+			active_bullet = 0
 		}
-		changeBullet(active_bullet);
+		changeBullet(active_bullet)
 	}
 
 	function checkDirection() {
-		if (touchendX < touchstartX) { clearInterval(dots); moveBulletLeft(); } // swiped left
-		if (touchendX > touchstartX) { clearInterval(dots); moveBulletRight(); } // swiped right
+		if (touchendX < touchstartX) {
+			clearInterval(dots)
+			moveBulletLeft()
+		} // swiped left
+		if (touchendX > touchstartX) {
+			clearInterval(dots)
+			moveBulletRight()
+		} // swiped right
 	}
-	
-	if (screen.width < 768) { // swipe is working only for Mobile version
-		document.querySelector('.carouselHero').addEventListener('touchstart', e => {
+
+	if (screen.width < 768) {
+		// swipe is working only for Mobile version
+		document.querySelector('.carouselHero').addEventListener('touchstart', (e) => {
 			touchstartX = e.changedTouches[0].screenX
 		})
 
-		document.querySelector('.carouselHero').addEventListener('touchend', e => {
+		document.querySelector('.carouselHero').addEventListener('touchend', (e) => {
 			touchendX = e.changedTouches[0].screenX
 			checkDirection()
 		})
 	}
 </script>
-

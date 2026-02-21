@@ -1,8 +1,8 @@
 // @ts-check
-import { defineConfig } from 'astro/config'
+import netlify from '@astrojs/netlify'
 import tailwindcss from '@tailwindcss/vite'
 import icon from 'astro-icon'
-import netlify from '@astrojs/netlify'
+import { defineConfig } from 'astro/config'
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,12 +11,12 @@ export default defineConfig({
 		plugins: [tailwindcss()]
 	},
 	image: {
-		domains: ['zppgejyumyfevfgyicjm.supabase.co'],
+		domains: ['ubcsvbyqgepyxswjggvm.supabase.co'],
 		//serviceEntryPoint: '@astrojs/image/sharp', // or your preferred image service
 		remotePatterns: [
 			{
 				protocol: 'https',
-				hostname: 'zppgejyumyfevfgyicjm.supabase.co/storage/v1/s3'
+				hostname: 'ubcsvbyqgepyxswjggvm.supabase.co/storage'
 			}
 		]
 	},
